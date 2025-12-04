@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Online Shoe Store</title>
+    <style>
+        body { font-family: Arial; padding: 20px; background:#f0f0f0; }
+        .product {
+            width: 260px;
+            background: #fff;
+            border-radius: 10px;
+            border: 1px solid #ccc;
+            padding: 15px;
+            margin: 15px;
+            display: inline-block;
+            vertical-align: top;
+        }
+        .product img {
+            width: 100%;
+            border-radius: 10px;
+        }
+        .cart-box {
+            position: fixed;
+            right: 20px;
+            top: 20px;
+            width: 260px;
+            border: 1px solid #000;
+            padding: 15px;
+            background: white;
+            border-radius: 10px;
+        }
+        button {
+            padding: 8px 15px;
+            margin-top: 10px;
+            cursor: pointer;
+            background: black;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Online Shoe Store</h1>
+
+<!-- Product 1 -->
+<div class="product">
+    <img src="https://static.nike.com/a/images/t_prod/f_auto,q_auto:eco/4bff7209-3f25-4d80-9f00-db9fee9601e7/air-zoom-pegasus-40-road-running-shoes.png">
+    <h3>Nike Air Zoom</h3>
+    <p>Price: $120</p>
+    <button onclick="addToCart('Nike Air Zoom', 120)">Add to Cart</button>
+</div>
+
+<!-- Product 2 -->
+<div class="product">
+    <img src="https://assets.adidas.com/images/w_600,f_auto,q_auto/3cf02c59bf904f5d8dc8af2f00c0c79c_9366/Ultraboost_1.0_Shoes_Black_HQ4201_01_standard.jpg">
+    <h3>Adidas Ultraboost</h3>
+    <p>Price: $150</p>
+    <button onclick="addToCart('Adidas Ultraboost', 150)">Add to Cart</button>
+</div>
+
+<!-- Product 3 -->
+<div class="product">
+    <img src="https://nb.scene7.com/is/image/NB/m990gl6_nb_02_i?$pdpflexf2$&wid=440&hei=440">
+    <h3>New Balance 990v6</h3>
+    <p>Price: $180</p>
+    <button onclick="addToCart('New Balance 990v6', 180)">Add to Cart</button>
+</div>
+
+<!-- Cart -->
+<div class="cart-box">
+    <h3>Your Cart</h3>
+    <ul id="cart-list"></ul>
+    <p id="total">Total: $0</p>
+    <button onclick="checkout()">Checkout</button>
+</div>
+
+<script>
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+updateCart();
+
+function addToCart(name, price) {
+    cart.push({ name, price });
+    localStorage.setItem("cart", JSON.stringify(cart));
+    updateCart();
+}
+
+function updateCart() {
+    let list = document.getElementById("cart-list");
+    list.innerHTML = "";
+
+    let total = 0;
+    cart.forEach(item => {
+        let li = document.createElement("li");
+        li.innerText = item.name + " - $" + item.price;
+        list.appendChild(li);
+        total += item.price;
+    });
+
+    document.getElementById("total").innerText = "Total: $" + total;
+}
+
+function checkout() {
+    if (cart.length === 0) {
+        alert("Your cart is empty!");
+        return;
+    }
+
+    let email = "store@example.com"; // ← 你可以改成你的 Email
+    let subject = "My Shoe Order";
+
+    let body = "Hello,%0D%0A%0D%0AHere is my order:%0D%0A%0D%0A";
+
+    cart.forEach(item => {
+        body += "- " + item.name + " ($" + item.price + ")%0D%0A";
+    });
+
+    let total = cart.reduce((sum, item) => sum + item.price, 0);
+    body += "%0D%0ATotal: $" + total + "%0D%0A%0D%0AThank you!";
+
+    window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
+}
+</script>
+
+</body>
+</html>
