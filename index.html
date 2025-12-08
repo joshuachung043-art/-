@@ -2,254 +2,238 @@
 <html lang="zh-Hant">
 <head>
 <meta charset="UTF-8">
-<title>分類線上商城 | Taiwan Store</title>
+<title>台灣線上商城</title>
 
 <style>
-    body {
-        font-family: Arial;
-        margin: 0;
-        background: #f3f4f6;
-    }
+    body { font-family: Arial; margin: 0; background: #f3f4f6; }
 
     h1 {
-        text-align: center;
-        padding: 20px;
+        text-align: center; padding: 20px;
+        margin: 0; background: #4a90e2; color: white;
+    }
+
+    /* 類別按鈕 */
+    .tabs {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        padding: 15px;
+        background: white;
+    }
+
+    .tab-btn {
+        padding: 10px 20px;
+        background: #e0e0e0;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+    .tab-btn.active {
         background: #4a90e2;
         color: white;
-        margin: 0;
     }
 
-    h2.section-title {
-        text-align: center;
-        margin-top: 30px;
-        font-size: 26px;
-        color: #333;
-    }
-
+    /* 商品卡片 */
     .store-container {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        padding: 10px 20px;
+        display: flex; flex-wrap: wrap;
+        justify-content: center; padding: 20px;
     }
-
     .product {
-        background: white;
-        width: 260px;
-        margin: 15px;
-        padding: 15px;
+        background: white; width: 260px;
+        margin: 15px; padding: 15px;
         border-radius: 12px;
         box-shadow: 0 2px 8px rgba(0,0,0,0.15);
         text-align: center;
     }
-
     .product img {
-        width: 240px;
-        height: 240px;
-        object-fit: cover;
-        border-radius: 10px;
-        background: #ddd;
+        width: 240px; height: 240px;
+        object-fit: cover; border-radius: 10px;
     }
-
-    select, input {
-        margin-top: 8px;
-        padding: 5px;
-        width: 90%;
-        border-radius: 5px;
-    }
+    select, input { width: 90%; padding: 6px; border-radius: 5px; margin-top: 5px; }
 
     button {
-        margin-top: 10px;
-        width: 90%;
-        padding: 10px;
-        background: #4a90e2;
-        color: white;
-        border: none;
-        border-radius: 6px;
-        cursor: pointer;
-        font-size: 15px;
-    }
-    button:hover {
-        background: #357ac9;
+        width: 90%; padding: 10px;
+        background: #4a90e2; color: white;
+        border: none; border-radius: 6px;
+        cursor: pointer; margin-top: 10px;
     }
 
-    /* Cart */
+    /* 購物車 */
     #cart {
-        background: white;
-        margin: 30px;
-        padding: 20px;
-        border-radius: 12px;
+        background: white; margin: 30px;
+        padding: 20px; border-radius: 12px;
         box-shadow: 0 2px 10px rgba(0,0,0,0.15);
     }
 
-    .cart-header {
-        display: flex;
-        justify-content: space-between;
-        font-size: 20px;
-    }
-
     .cart-item {
-        margin-top: 10px;
-        padding: 10px;
         background: #eef2f7;
+        margin: 10px 0; padding: 10px;
         border-radius: 8px;
     }
 
-    .remove-btn {
-        background: #d9534f;
-        margin-top: 5px;
-    }
-
-    .clear-btn {
-        background: #ff3b30;
-        margin-top: 20px;
-    }
+    .remove-btn { background: #d9534f; }
+    .clear-btn { background: #ff3b30; margin-top: 20px; }
+    .checkout-btn { background: #28a745; margin-top: 20px; }
 </style>
 
 </head>
 <body>
 
-<h1>Taiwan Online Store</h1>
+<h1>台灣線上商城</h1>
 
-<!-- SHOES SECTION -->
-<h2 class="section-title">👟 鞋子區 Shoes</h2>
-<div class="store-container">
+<!-- 類別切換 -->
+<div class="tabs">
+    <button class="tab-btn active" onclick="showTab('shoes')">鞋子區</button>
+    <button class="tab-btn" onclick="showTab('clothes')">服飾區</button>
+</div>
 
-    <!-- Shoe 1 -->
+<!-- SHOES -->
+<div id="shoes" class="store-container">
+
     <div class="product">
         <img src="https://via.placeholder.com/240?text=Running+Shoes">
         <h3>跑步鞋 Running Shoes</h3>
-        <p>NT$ 1,290</p>
-
+        <p>NT$ 1290</p>
         尺寸：
         <select id="size1">
             <option>38</option><option>40</option><option>42</option><option>44</option>
         </select>
-
-        數量：
-        <input type="number" id="qty1" min="1" value="1">
-
-        <button onclick="addProduct('跑步鞋 Running Shoes', 1290, 'size1', 'qty1')">加入購物車</button>
+        數量：<input type="number" id="qty1" value="1" min="1">
+        <button onclick="addProduct('跑步鞋 Running Shoes',1290,'size1','qty1')">加入購物車</button>
     </div>
 
-    <!-- Shoe 2 -->
     <div class="product">
         <img src="https://via.placeholder.com/240?text=Basketball+Shoes">
         <h3>籃球鞋 Basketball Shoes</h3>
-        <p>NT$ 1,890</p>
-
+        <p>NT$ 1890</p>
         尺寸：
         <select id="size2">
             <option>39</option><option>41</option><option>43</option><option>45</option>
         </select>
-
-        數量：
-        <input type="number" id="qty2" min="1" value="1">
-
-        <button onclick="addProduct('籃球鞋 Basketball Shoes', 1890, 'size2', 'qty2')">加入購物車</button>
+        數量：<input type="number" id="qty2" value="1" min="1">
+        <button onclick="addProduct('籃球鞋 Basketball Shoes',1890,'size2','qty2')">加入購物車</button>
     </div>
-
 </div>
 
+<!-- CLOTHES -->
+<div id="clothes" class="store-container" style="display:none;">
 
-
-<!-- CLOTHES SECTION -->
-<h2 class="section-title">👕 衣服區 Clothes</h2>
-<div class="store-container">
-
-    <!-- Shirt -->
     <div class="product">
         <img src="https://via.placeholder.com/240?text=T-Shirt">
         <h3>短袖 T-Shirt</h3>
         <p>NT$ 299</p>
-
         尺寸：
         <select id="size3">
             <option>S</option><option>M</option><option>L</option><option>XL</option>
         </select>
-
-        數量：
-        <input type="number" id="qty3" min="1" value="1">
-
-        <button onclick="addProduct('短袖 T-Shirt', 299, 'size3', 'qty3')">加入購物車</button>
+        數量：<input type="number" id="qty3" value="1" min="1">
+        <button onclick="addProduct('短袖 T-Shirt',299,'size3','qty3')">加入購物車</button>
     </div>
 
-    <!-- Hoodie -->
     <div class="product">
         <img src="https://via.placeholder.com/240?text=Hoodie">
         <h3>連帽外套 Hoodie</h3>
         <p>NT$ 790</p>
-
         尺寸：
         <select id="size4">
             <option>S</option><option>M</option><option>L</option><option>XL</option>
         </select>
-
-        數量：
-        <input type="number" id="qty4" min="1" value="1">
-
-        <button onclick="addProduct('連帽外套 Hoodie', 790, 'size4', 'qty4')">加入購物車</button>
+        數量：<input type="number" id="qty4" value="1" min="1">
+        <button onclick="addProduct('連帽外套 Hoodie',790,'size4','qty4')">加入購物車</button>
     </div>
-
 </div>
 
 
 
 <!-- CART -->
 <div id="cart">
-    <div class="cart-header">
-        <strong>🛒 我的購物車</strong>
-        <strong>總計：NT$ <span id="total">0</span></strong>
-    </div>
-
+    <h2>🛒 購物車內容</h2>
     <div id="cart-items"></div>
 
+    <h2>總計：NT$ <span id="total">0</span></h2>
+
     <button class="clear-btn" onclick="clearCart()">清空購物車</button>
+    <button class="checkout-btn" onclick="checkout()">結帳（Email）</button>
 </div>
 
 
-
-
 <script>
-let total = 0;
+/* 分類切換 */
+function showTab(tab) {
+    document.getElementById("shoes").style.display = (tab === "shoes") ? "flex" : "none";
+    document.getElementById("clothes").style.display = (tab === "clothes") ? "flex" : "none";
 
+    document.querySelectorAll(".tab-btn").forEach(btn => btn.classList.remove("active"));
+    event.target.classList.add("active");
+}
+
+let total = 0;
+let cartList = [];
+
+/* 加入購物車 */
 function addProduct(name, price, sizeId, qtyId) {
     const size = document.getElementById(sizeId).value;
-    const qty = parseInt(document.getElementById(qtyId).value);
-
+    const qty = Number(document.getElementById(qtyId).value);
     const subtotal = price * qty;
 
-    const cartItems = document.getElementById("cart-items");
-
-    const item = document.createElement("div");
-    item.className = "cart-item";
     const id = "item" + Math.random().toString(36).substr(2, 9);
 
-    item.id = id;
-    item.innerHTML = `
+    cartList.push({ id, name, size, qty, subtotal });
+
+    const itemDiv = document.createElement("div");
+    itemDiv.className = "cart-item";
+    itemDiv.id = id;
+    itemDiv.innerHTML = `
         <strong>${name}</strong><br>
         尺寸：${size}<br>
         數量：${qty}<br>
         小計：NT$ ${subtotal}<br>
-        <button class="remove-btn" onclick="removeItem('${id}', ${subtotal})">移除</button>
+        <button class="remove-btn" onclick="removeItem('${id}')">移除</button>
     `;
 
-    cartItems.appendChild(item);
+    document.getElementById("cart-items").appendChild(itemDiv);
 
     total += subtotal;
     document.getElementById("total").textContent = total;
 }
 
-function removeItem(id, price) {
+/* 移除單項 */
+function removeItem(id) {
+    const item = cartList.find(i => i.id === id);
+    total -= item.subtotal;
+
+    cartList = cartList.filter(i => i.id !== id);
     document.getElementById(id).remove();
-    total -= price;
+
     document.getElementById("total").textContent = total;
 }
 
+/* 清空購物車 */
 function clearCart() {
-    document.getElementById("cart-items").innerHTML = "";
+    cartList = [];
     total = 0;
+    document.getElementById("cart-items").innerHTML = "";
     document.getElementById("total").textContent = 0;
+}
+
+/* 結帳（Email） */
+function checkout() {
+    if (cartList.length === 0) {
+        alert("購物車是空的！");
+        return;
+    }
+
+    let message = "購物內容：%0D%0A%0D%0A";
+
+    cartList.forEach(item => {
+        message += `商品：${item.name}%0D%0A尺寸：${item.size}%0D%0A數量：${item.qty}%0D%0A小計：NT$${item.subtotal}%0D%0A%0D%0A`;
+    });
+
+    message += `總計：NT$${total}%0D%0A`;
+
+    const mailto = `mailto:yourmail@example.com?subject=商城訂單&body=${message}`;
+    window.location.href = mailto;
 }
 </script>
 
