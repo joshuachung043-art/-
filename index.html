@@ -38,34 +38,109 @@
             border: none;
             border-radius: 5px;
         }
+        select {
+            width: 100%;
+            padding: 5px;
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
 
 <h1>Online Shoe Store</h1>
 
+<!-- PRODUCT TEMPLATE EXAMPLE:
+image , name, price, size dropdown
+-->
+
 <!-- Product 1 -->
 <div class="product">
-    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS0F3Tk9Ng51VsjzkJqRZSJZp3qIIvttDfItg&s">
+    <img src="https://static.nike.com/a/images/t_prod/f_auto,q_auto:eco/4bff7209-3f25-4d80-9f00-db9fee9601e7/air-zoom-pegasus-40-road-running-shoes.png">
     <h3>Nike Air Zoom</h3>
-    <p>Price: $5000</p>
-    <button onclick="addToCart('Nike Air Zoom', 5000)">Add to Cart</button>
+    <p>Price: $120</p>
+    <select id="size1">
+        <option value="">Select size</option>
+        <option>US 7</option>
+        <option>US 8</option>
+        <option>US 9</option>
+        <option>US 10</option>
+    </select>
+    <button onclick="addToCart('Nike Air Zoom', 120, document.getElementById('size1').value)">Add to Cart</button>
 </div>
 
 <!-- Product 2 -->
 <div class="product">
-    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQcqNNuWkhprMHiKPLEjknyZ1fLiTOVX0O-Ww&s">
+    <img src="https://assets.adidas.com/images/w_600,f_auto,q_auto/3cf02c59bf904f5d8dc8af2f00c0c79c_9366/Ultraboost_1.0_Shoes_Black_HQ4201_01_standard.jpg">
     <h3>Adidas Ultraboost</h3>
-    <p>Price: $3000</p>
-    <button onclick="addToCart('Adidas Ultraboost', 5600)">Add to Cart</button>
+    <p>Price: $150</p>
+    <select id="size2">
+        <option value="">Select size</option>
+        <option>US 7</option>
+        <option>US 8</option>
+        <option>US 9</option>
+        <option>US 10</option>
+    </select>
+    <button onclick="addToCart('Adidas Ultraboost', 150, document.getElementById('size2').value)">Add to Cart</button>
 </div>
 
 <!-- Product 3 -->
 <div class="product">
     <img src="https://nb.scene7.com/is/image/NB/m990gl6_nb_02_i?$pdpflexf2$&wid=440&hei=440">
     <h3>New Balance 990v6</h3>
-    <p>Price: $6000</p>
-    <button onclick="addToCart('New Balance 990v6', 6000)">Add to Cart</button>
+    <p>Price: $180</p>
+    <select id="size3">
+        <option value="">Select size</option>
+        <option>US 7</option>
+        <option>US 8</option>
+        <option>US 9</option>
+        <option>US 10</option>
+    </select>
+    <button onclick="addToCart('New Balance 990v6', 180, document.getElementById('size3').value)">Add to Cart</button>
+</div>
+
+<!-- Product 4 -->
+<div class="product">
+    <img src="https://static.nike.com/a/images/t_prod/f_auto,q_auto:eco/ee16043d-5a70-41ef-a49b-045f1cebf6b5/air-force-1-07-mens-shoes.png">
+    <h3>Nike Air Force 1</h3>
+    <p>Price: $110</p>
+    <select id="size4">
+        <option value="">Select size</option>
+        <option>US 7</option>
+        <option>US 8</option>
+        <option>US 9</option>
+        <option>US 10</option>
+    </select>
+    <button onclick="addToCart('Nike Air Force 1', 110, document.getElementById('size4').value)">Add to Cart</button>
+</div>
+
+<!-- Product 5 -->
+<div class="product">
+    <img src="https://images.vans.com/is/image/Vans/UY8HB4-HERO?$583x583$">
+    <h3>Vans Old Skool</h3>
+    <p>Price: $70</p>
+    <select id="size5">
+        <option value="">Select size</option>
+        <option>US 7</option>
+        <option>US 8</option>
+        <option>US 9</option>
+        <option>US 10</option>
+    </select>
+    <button onclick="addToCart('Vans Old Skool', 70, document.getElementById('size5').value)">Add to Cart</button>
+</div>
+
+<!-- Product 6 -->
+<div class="product">
+    <img src="https://images.puma.com/image/upload/f_auto,q_auto,b_rgb:fafafa,w_600,h_600/global/386615/01/sv01/fnd/EEA/fmt/png">
+    <h3>Puma RS-X</h3>
+    <p>Price: $130</p>
+    <select id="size6">
+        <option value="">Select size</option>
+        <option>US 7</option>
+        <option>US 8</option>
+        <option>US 9</option>
+        <option>US 10</option>
+    </select>
+    <button onclick="addToCart('Puma RS-X', 130, document.getElementById('size6').value)">Add to Cart</button>
 </div>
 
 <!-- Cart -->
@@ -80,8 +155,14 @@
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
 updateCart();
 
-function addToCart(name, price) {
-    cart.push({ name, price });
+function addToCart(name, price, size) {
+
+    if (!size) {
+        alert("Please select a size!");
+        return;
+    }
+
+    cart.push({ name, price, size });
     localStorage.setItem("cart", JSON.stringify(cart));
     updateCart();
 }
@@ -91,9 +172,10 @@ function updateCart() {
     list.innerHTML = "";
 
     let total = 0;
+
     cart.forEach(item => {
         let li = document.createElement("li");
-        li.innerText = item.name + " - $" + item.price;
+        li.innerText = `${item.name} (Size: ${item.size}) - $${item.price}`;
         list.appendChild(li);
         total += item.price;
     });
@@ -107,17 +189,17 @@ function checkout() {
         return;
     }
 
-    let email = "joshuachung043@gmail.com"; // ← 你可以改成你的 Email
+    let email = "store@example.com"; 
     let subject = "My Shoe Order";
 
     let body = "Hello,%0D%0A%0D%0AHere is my order:%0D%0A%0D%0A";
 
     cart.forEach(item => {
-        body += "- " + item.name + " ($" + item.price + ")%0D%0A";
+        body += `- ${item.name} (Size: ${item.size}) - $${item.price}%0D%0A`;
     });
 
     let total = cart.reduce((sum, item) => sum + item.price, 0);
-    body += "%0D%0ATotal: $" + total + "%0D%0A%0D%0AThank you!";
+    body += `%0D%0ATotal: $${total}%0D%0A%0D%0AThank you!`;
 
     window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
 }
