@@ -1,208 +1,240 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Online Shoe Store</title>
-    <style>
-        body { font-family: Arial; padding: 20px; background:#f0f0f0; }
-        .product {
-            width: 260px;
-            background: #fff;
-            border-radius: 10px;
-            border: 1px solid #ccc;
-            padding: 15px;
-            margin: 15px;
-            display: inline-block;
-            vertical-align: top;
-        }
-        .product img {
-            width: 100%;
-            border-radius: 10px;
-        }
-        .cart-box {
-            position: fixed;
-            right: 20px;
-            top: 20px;
-            width: 260px;
-            border: 1px solid #000;
-            padding: 15px;
-            background: white;
-            border-radius: 10px;
-        }
-        button {
-            padding: 8px 15px;
-            margin-top: 10px;
-            cursor: pointer;
-            background: black;
-            color: white;
-            border: none;
-            border-radius: 5px;
-        }
-        select {
-            width: 100%;
-            padding: 5px;
-            margin-top: 10px;
-        }
-    </style>
+<meta charset="UTF-8">
+<title>Upgraded Online Store</title>
+
+<style>
+    body {
+        font-family: Arial;
+        margin: 0;
+        padding: 0;
+        background: #f2f4f7;
+    }
+
+    h1 {
+        text-align: center;
+        padding: 20px;
+        background: #4a90e2;
+        color: white;
+    }
+
+    .store-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        padding: 20px;
+    }
+
+    .product {
+        background: white;
+        width: 260px;
+        margin: 15px;
+        padding: 15px;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        text-align: center;
+    }
+
+    .product img {
+        width: 240px;
+        height: 240px;
+        object-fit: cover;
+        border-radius: 10px;
+    }
+
+    select, input {
+        margin-top: 8px;
+        padding: 5px;
+        width: 90%;
+        border-radius: 5px;
+    }
+
+    button {
+        margin-top: 10px;
+        width: 90%;
+        padding: 10px;
+        background: #4a90e2;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 15px;
+    }
+
+    button:hover {
+        background: #357ac9;
+    }
+
+    #cart {
+        background: white;
+        margin: 30px;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+    }
+
+    .cart-header {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .cart-item {
+        margin-top: 10px;
+        padding: 10px;
+        background: #eef2f7;
+        border-radius: 8px;
+    }
+
+    .remove-btn {
+        background: #d9534f;
+        margin-top: 5px;
+    }
+    .remove-btn:hover {
+        background: #b52b27;
+    }
+
+    .clear-btn {
+        background: #ff3b30;
+        margin-top: 20px;
+    }
+    .clear-btn:hover {
+        background: #d40000;
+    }
+</style>
+
 </head>
 <body>
 
-<h1>Online Shoe Store</h1>
+<h1>My Upgraded Online Store</h1>
 
-<!-- PRODUCT TEMPLATE EXAMPLE:
-image , name, price, size dropdown
--->
+<div class="store-container">
 
-<!-- Product 1 -->
-<div class="product">
-    <img src="https://static.nike.com/a/images/t_prod/f_auto,q_auto:eco/4bff7209-3f25-4d80-9f00-db9fee9601e7/air-zoom-pegasus-40-road-running-shoes.png">
-    <h3>Nike Air Zoom</h3>
-    <p>Price: $120</p>
-    <select id="size1">
-        <option value="">Select size</option>
-        <option>US 7</option>
-        <option>US 8</option>
-        <option>US 9</option>
-        <option>US 10</option>
-    </select>
-    <button onclick="addToCart('Nike Air Zoom', 120, document.getElementById('size1').value)">Add to Cart</button>
+    <!-- PRODUCT 1 -->
+    <div class="product">
+        <img src="https://via.placeholder.com/240?text=T-Shirt">
+        <h3>Classic T-Shirt</h3>
+        <p>$12.99</p>
+
+        Size:<br>
+        <select id="size1">
+            <option>S</option>
+            <option>M</option>
+            <option>L</option>
+            <option>XL</option>
+        </select>
+
+        Quantity:<br>
+        <input type="number" id="qty1" min="1" value="1">
+
+        <button onclick="addProduct('Classic T-Shirt', 12.99, 'size1', 'qty1')">
+            Add to Cart
+        </button>
+    </div>
+
+    <!-- PRODUCT 2 -->
+    <div class="product">
+        <img src="https://via.placeholder.com/240?text=Hoodie">
+        <h3>Warm Hoodie</h3>
+        <p>$29.99</p>
+
+        Size:<br>
+        <select id="size2">
+            <option>S</option>
+            <option>M</option>
+            <option>L</option>
+            <option>XL</option>
+        </select>
+
+        Quantity:<br>
+        <input type="number" id="qty2" min="1" value="1">
+
+        <button onclick="addProduct('Warm Hoodie', 29.99, 'size2', 'qty2')">
+            Add to Cart
+        </button>
+    </div>
+
+    <!-- PRODUCT 3 -->
+    <div class="product">
+        <img src="https://via.placeholder.com/240?text=Shoes">
+        <h3>Sport Shoes</h3>
+        <p>$49.99</p>
+
+        Size:<br>
+        <select id="size3">
+            <option>38</option>
+            <option>40</option>
+            <option>42</option>
+            <option>44</option>
+        </select>
+
+        Quantity:<br>
+        <input type="number" id="qty3" min="1" value="1">
+
+        <button onclick="addProduct('Sport Shoes', 49.99, 'size3', 'qty3')">
+            Add to Cart
+        </button>
+    </div>
+
 </div>
 
-<!-- Product 2 -->
-<div class="product">
-    <img src="https://assets.adidas.com/images/w_600,f_auto,q_auto/3cf02c59bf904f5d8dc8af2f00c0c79c_9366/Ultraboost_1.0_Shoes_Black_HQ4201_01_standard.jpg">
-    <h3>Adidas Ultraboost</h3>
-    <p>Price: $150</p>
-    <select id="size2">
-        <option value="">Select size</option>
-        <option>US 7</option>
-        <option>US 8</option>
-        <option>US 9</option>
-        <option>US 10</option>
-    </select>
-    <button onclick="addToCart('Adidas Ultraboost', 150, document.getElementById('size2').value)">Add to Cart</button>
-</div>
 
-<!-- Product 3 -->
-<div class="product">
-    <img src="https://nb.scene7.com/is/image/NB/m990gl6_nb_02_i?$pdpflexf2$&wid=440&hei=440">
-    <h3>New Balance 990v6</h3>
-    <p>Price: $180</p>
-    <select id="size3">
-        <option value="">Select size</option>
-        <option>US 7</option>
-        <option>US 8</option>
-        <option>US 9</option>
-        <option>US 10</option>
-    </select>
-    <button onclick="addToCart('New Balance 990v6', 180, document.getElementById('size3').value)">Add to Cart</button>
-</div>
 
-<!-- Product 4 -->
-<div class="product">
-    <img src="https://static.nike.com/a/images/t_prod/f_auto,q_auto:eco/ee16043d-5a70-41ef-a49b-045f1cebf6b5/air-force-1-07-mens-shoes.png">
-    <h3>Nike Air Force 1</h3>
-    <p>Price: $110</p>
-    <select id="size4">
-        <option value="">Select size</option>
-        <option>US 7</option>
-        <option>US 8</option>
-        <option>US 9</option>
-        <option>US 10</option>
-    </select>
-    <button onclick="addToCart('Nike Air Force 1', 110, document.getElementById('size4').value)">Add to Cart</button>
-</div>
+<!-- CART SECTION -->
+<div id="cart">
+    <div class="cart-header">
+        <h2>My Cart</h2>
+        <h2>Total: $<span id="total">0.00</span></h2>
+    </div>
 
-<!-- Product 5 -->
-<div class="product">
-    <img src="https://images.vans.com/is/image/Vans/UY8HB4-HERO?$583x583$">
-    <h3>Vans Old Skool</h3>
-    <p>Price: $70</p>
-    <select id="size5">
-        <option value="">Select size</option>
-        <option>US 7</option>
-        <option>US 8</option>
-        <option>US 9</option>
-        <option>US 10</option>
-    </select>
-    <button onclick="addToCart('Vans Old Skool', 70, document.getElementById('size5').value)">Add to Cart</button>
-</div>
+    <div id="cart-items"></div>
 
-<!-- Product 6 -->
-<div class="product">
-    <img src="https://images.puma.com/image/upload/f_auto,q_auto,b_rgb:fafafa,w_600,h_600/global/386615/01/sv01/fnd/EEA/fmt/png">
-    <h3>Puma RS-X</h3>
-    <p>Price: $130</p>
-    <select id="size6">
-        <option value="">Select size</option>
-        <option>US 7</option>
-        <option>US 8</option>
-        <option>US 9</option>
-        <option>US 10</option>
-    </select>
-    <button onclick="addToCart('Puma RS-X', 130, document.getElementById('size6').value)">Add to Cart</button>
-</div>
-
-<!-- Cart -->
-<div class="cart-box">
-    <h3>Your Cart</h3>
-    <ul id="cart-list"></ul>
-    <p id="total">Total: $0</p>
-    <button onclick="checkout()">Checkout</button>
+    <button class="clear-btn" onclick="clearCart()">Clear All</button>
 </div>
 
 <script>
-let cart = JSON.parse(localStorage.getItem("cart")) || [];
-updateCart();
-
-function addToCart(name, price, size) {
-
-    if (!size) {
-        alert("Please select a size!");
-        return;
-    }
-
-    cart.push({ name, price, size });
-    localStorage.setItem("cart", JSON.stringify(cart));
-    updateCart();
-}
-
-function updateCart() {
-    let list = document.getElementById("cart-list");
-    list.innerHTML = "";
-
     let total = 0;
 
-    cart.forEach(item => {
-        let li = document.createElement("li");
-        li.innerText = `${item.name} (Size: ${item.size}) - $${item.price}`;
-        list.appendChild(li);
-        total += item.price;
-    });
+    function addProduct(name, price, sizeId, qtyId) {
+        const size = document.getElementById(sizeId).value;
+        const qty = parseInt(document.getElementById(qtyId).value);
 
-    document.getElementById("total").innerText = "Total: $" + total;
-}
+        const subtotal = price * qty;
 
-function checkout() {
-    if (cart.length === 0) {
-        alert("Your cart is empty!");
-        return;
+        const cartItems = document.getElementById("cart-items");
+
+        const item = document.createElement("div");
+        item.className = "cart-item";
+        const itemId = "item" + Math.random().toString(36).substr(2, 9);
+
+        item.id = itemId;
+        item.innerHTML = `
+            <strong>${name}</strong><br>
+            Size: ${size}<br>
+            Quantity: ${qty}<br>
+            Price: $${subtotal.toFixed(2)}<br>
+            <button class="remove-btn" onclick="removeItem('${itemId}', ${subtotal})">
+                Remove
+            </button>
+        `;
+
+        cartItems.appendChild(item);
+
+        total += subtotal;
+        document.getElementById("total").textContent = total.toFixed(2);
     }
 
-    let email = "store@example.com"; 
-    let subject = "My Shoe Order";
+    function removeItem(id, price) {
+        document.getElementById(id).remove();
+        total -= price;
+        document.getElementById("total").textContent = total.toFixed(2);
+    }
 
-    let body = "Hello,%0D%0A%0D%0AHere is my order:%0D%0A%0D%0A";
-
-    cart.forEach(item => {
-        body += `- ${item.name} (Size: ${item.size}) - $${item.price}%0D%0A`;
-    });
-
-    let total = cart.reduce((sum, item) => sum + item.price, 0);
-    body += `%0D%0ATotal: $${total}%0D%0A%0D%0AThank you!`;
-
-    window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
-}
+    function clearCart() {
+        document.getElementById("cart-items").innerHTML = "";
+        total = 0;
+        document.getElementById("total").textContent = "0.00";
+    }
 </script>
 
 </body>
