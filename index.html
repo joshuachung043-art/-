@@ -14,36 +14,25 @@
   </style>
 </head>
 <body>
-  <h1> Food Shop</h1>
+  <h1>🍔 Food Shop</h1>
   <img src="https://i.imgur.com/7FjvF4P.jpeg" alt="Food Banner" style="width:100%; border-radius:15px; margin:15px 0;" />
 
   <!-- Category Selection -->
-  <div class="section">
-    <label>Select Category:</label>
-    <select id="categorySelect" onchange="loadCategory()">
-      <option value="none">-- Select --</option>
-      <option value="snacks">Snacks</option>
-      <option value="fruits">Fruits</option>
-    </select>
-  </div>
-
-  <!-- Product List -->
-  <div id="productList" class="section"></div>
-
-  <!-- Cart -->
-  <h2>My Cart</h2>
-  <div id="cart"></div>
-  <button onclick="clearCart()">Clear Cart</button>
-  <button onclick="checkout()">Checkout</button>
-
-  <script>
-    const products = {
-      snacks: [
-        { name: "Potato Chips", price: 35, size: "50g", img: "https://i.imgur.com/5ZQG9ZP.jpeg" },
-        { name: "Chocolate Bar", price: 45, size: "40g", img: "https://i.imgur.com/N8NTZcn.jpeg" }
-      ],
-      fruits: [
-        { name: "Banana", price: 15, size: "一根", img: "https://i.imgur.com/U5hQpQ2.jpeg" },
+  <div class="section"><h2>全部商品</h2><div id="allProducts" style="display:flex; overflow-x:auto; gap:15function loadAllProducts() {
+      const container = document.getElementById('allProducts');
+      container.innerHTML = '';
+      Object.values(products).flat().forEach((item, index) => {
+        container.innerHTML += `
+          <div class='item' style='min-width:180px;'>
+            <img src="${item.img}" />
+            <h3>${item.name}</h3>
+            <p>Price: NT$${item.price}</p>
+            <p>Size: ${item.size}</p>
+            <button onclick='addToCartByItem(${index})'>Add to Cart</button>
+          </div>
+        `;
+      });
+    }imgur.com/U5hQpQ2.jpeg" },
         { name: "Orange", price: 10, size: "一顆", img: "https://i.imgur.com/pbZQ6L9.jpeg" }
       ]
     };
@@ -88,6 +77,10 @@
       cart = [];
       renderCart();
     }
+
+    function addToCartByItem(i){ cart.push(Object.values(products).flat()[i]); renderCart(); }
+
+    loadAllProducts();
 
     function checkout() {
       if (cart.length === 0) return alert("Cart is empty!");
