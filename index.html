@@ -1,241 +1,101 @@
 <!DOCTYPE html>
-<html lang="zh-Hant">
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>台灣線上商城</title>
-
-<style>
-    body { font-family: Arial; margin: 0; background: #f3f4f6; }
-
-    h1 {
-        text-align: center; padding: 20px;
-        margin: 0; background: #4a90e2; color: white;
-    }
-
-    /* 類別按鈕 */
-    .tabs {
-        display: flex;
-        justify-content: center;
-        gap: 10px;
-        padding: 15px;
-        background: white;
-    }
-
-    .tab-btn {
-        padding: 10px 20px;
-        background: #e0e0e0;
-        border: none;
-        border-radius: 6px;
-        cursor: pointer;
-        font-size: 16px;
-    }
-    .tab-btn.active {
-        background: #4a90e2;
-        color: white;
-    }
-
-    /* 商品卡片 */
-    .store-container {
-        display: flex; flex-wrap: wrap;
-        justify-content: center; padding: 20px;
-    }
-    .product {
-        background: white; width: 260px;
-        margin: 15px; padding: 15px;
-        border-radius: 12px;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-        text-align: center;
-    }
-    .product img {
-        width: 240px; height: 240px;
-        object-fit: cover; border-radius: 10px;
-    }
-    select, input { width: 90%; padding: 6px; border-radius: 5px; margin-top: 5px; }
-
-    button {
-        width: 90%; padding: 10px;
-        background: #4a90e2; color: white;
-        border: none; border-radius: 6px;
-        cursor: pointer; margin-top: 10px;
-    }
-
-    /* 購物車 */
-    #cart {
-        background: white; margin: 30px;
-        padding: 20px; border-radius: 12px;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.15);
-    }
-
-    .cart-item {
-        background: #eef2f7;
-        margin: 10px 0; padding: 10px;
-        border-radius: 8px;
-    }
-
-    .remove-btn { background: #d9534f; }
-    .clear-btn { background: #ff3b30; margin-top: 20px; }
-    .checkout-btn { background: #28a745; margin-top: 20px; }
-</style>
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Food Store</title>
+  <style>
+    body { font-family: Arial; padding: 20px; }
+    .section { margin-bottom: 30px; }
+    .item { border: 1px solid #ccc; padding: 10px; border-radius: 10px; margin: 10px 0; }
+    .item img { width: 120px; border-radius: 10px; }
+    button { padding: 6px 12px; margin-top: 5px; }
+    #cart { border: 2px solid #444; padding: 10px; border-radius: 10px; }
+  </style>
 </head>
 <body>
+  <h1>🍔 Food Shop</h1>
 
-<h1>台灣線上商城</h1>
+  <!-- Category Selection -->
+  <div class="section">
+    <label>Select Category:</label>
+    <select id="categorySelect" onchange="loadCategory()">
+      <option value="none">-- Select --</option>
+      <option value="snacks">Snacks</option>
+      <option value="meals">Meals</option>
+    </select>
+  </div>
 
-<!-- 類別切換 -->
-<div class="tabs">
-    <button class="tab-btn active" onclick="showTab('shoes')">鞋子區</button>
-    <button class="tab-btn" onclick="showTab('clothes')">服飾區</button>
-</div>
+  <!-- Product List -->
+  <div id="productList" class="section"></div>
 
-<!-- SHOES -->
-<div id="shoes" class="store-container">
+  <!-- Cart -->
+  <h2>My Cart</h2>
+  <div id="cart"></div>
+  <button onclick="clearCart()">Clear Cart</button>
+  <button onclick="checkout()">Checkout</button>
 
-    <div class="product">
-        <img src="https://via.placeholder.com/240?text=Running+Shoes">
-        <h3>跑步鞋 Running Shoes</h3>
-        <p>NT$ 1290</p>
-        尺寸：
-        <select id="size1">
-            <option>38</option><option>40</option><option>42</option><option>44</option>
-        </select>
-        數量：<input type="number" id="qty1" value="1" min="1">
-        <button onclick="addProduct('跑步鞋 Running Shoes',1290,'size1','qty1')">加入購物車</button>
-    </div>
+  <script>
+    const products = {
+      snacks: [
+        { name: "Potato Chips", price: 35, size: "50g", img: "https://i.imgur.com/5ZQG9ZP.jpeg" },
+        { name: "Chocolate Bar", price: 45, size: "40g", img: "https://i.imgur.com/N8NTZcn.jpeg" }
+      ],
+      meals: [
+        { name: "Beef Bento", price: 120, size: "1 box", img: "https://i.imgur.com/eIl4jWQ.jpeg" },
+        { name: "Fried Chicken Set", price: 150, size: "1 set", img: "https://i.imgur.com/oXgKdpv.jpeg" }
+      ]
+    };
 
-    <div class="product">
-        <img src="https://via.placeholder.com/240?text=Basketball+Shoes">
-        <h3>籃球鞋 Basketball Shoes</h3>
-        <p>NT$ 1890</p>
-        尺寸：
-        <select id="size2">
-            <option>39</option><option>41</option><option>43</option><option>45</option>
-        </select>
-        數量：<input type="number" id="qty2" value="1" min="1">
-        <button onclick="addProduct('籃球鞋 Basketball Shoes',1890,'size2','qty2')">加入購物車</button>
-    </div>
-</div>
+    let cart = [];
 
-<!-- CLOTHES -->
-<div id="clothes" class="store-container" style="display:none;">
+    function loadCategory() {
+      const cat = document.getElementById("categorySelect").value;
+      const list = document.getElementById("productList");
+      list.innerHTML = "";
 
-    <div class="product">
-        <img src="https://via.placeholder.com/240?text=T-Shirt">
-        <h3>短袖 T-Shirt</h3>
-        <p>NT$ 299</p>
-        尺寸：
-        <select id="size3">
-            <option>S</option><option>M</option><option>L</option><option>XL</option>
-        </select>
-        數量：<input type="number" id="qty3" value="1" min="1">
-        <button onclick="addProduct('短袖 T-Shirt',299,'size3','qty3')">加入購物車</button>
-    </div>
+      if (cat === "none") return;
 
-    <div class="product">
-        <img src="https://via.placeholder.com/240?text=Hoodie">
-        <h3>連帽外套 Hoodie</h3>
-        <p>NT$ 790</p>
-        尺寸：
-        <select id="size4">
-            <option>S</option><option>M</option><option>L</option><option>XL</option>
-        </select>
-        數量：<input type="number" id="qty4" value="1" min="1">
-        <button onclick="addProduct('連帽外套 Hoodie',790,'size4','qty4')">加入購物車</button>
-    </div>
-</div>
-
-
-
-<!-- CART -->
-<div id="cart">
-    <h2>🛒 購物車內容</h2>
-    <div id="cart-items"></div>
-
-    <h2>總計：NT$ <span id="total">0</span></h2>
-
-    <button class="clear-btn" onclick="clearCart()">清空購物車</button>
-    <button class="checkout-btn" onclick="checkout()">結帳（Email）</button>
-</div>
-
-
-<script>
-/* 分類切換 */
-function showTab(tab) {
-    document.getElementById("shoes").style.display = (tab === "shoes") ? "flex" : "none";
-    document.getElementById("clothes").style.display = (tab === "clothes") ? "flex" : "none";
-
-    document.querySelectorAll(".tab-btn").forEach(btn => btn.classList.remove("active"));
-    event.target.classList.add("active");
-}
-
-let total = 0;
-let cartList = [];
-
-/* 加入購物車 */
-function addProduct(name, price, sizeId, qtyId) {
-    const size = document.getElementById(sizeId).value;
-    const qty = Number(document.getElementById(qtyId).value);
-    const subtotal = price * qty;
-
-    const id = "item" + Math.random().toString(36).substr(2, 9);
-
-    cartList.push({ id, name, size, qty, subtotal });
-
-    const itemDiv = document.createElement("div");
-    itemDiv.className = "cart-item";
-    itemDiv.id = id;
-    itemDiv.innerHTML = `
-        <strong>${name}</strong><br>
-        尺寸：${size}<br>
-        數量：${qty}<br>
-        小計：NT$ ${subtotal}<br>
-        <button class="remove-btn" onclick="removeItem('${id}')">移除</button>
-    `;
-
-    document.getElementById("cart-items").appendChild(itemDiv);
-
-    total += subtotal;
-    document.getElementById("total").textContent = total;
-}
-
-/* 移除單項 */
-function removeItem(id) {
-    const item = cartList.find(i => i.id === id);
-    total -= item.subtotal;
-
-    cartList = cartList.filter(i => i.id !== id);
-    document.getElementById(id).remove();
-
-    document.getElementById("total").textContent = total;
-}
-
-/* 清空購物車 */
-function clearCart() {
-    cartList = [];
-    total = 0;
-    document.getElementById("cart-items").innerHTML = "";
-    document.getElementById("total").textContent = 0;
-}
-
-/* 結帳（Email） */
-function checkout() {
-    if (cartList.length === 0) {
-        alert("購物車是空的！");
-        return;
+      products[cat].forEach((item, index) => {
+        list.innerHTML += `
+          <div class='item'>
+            <img src="${item.img}" />
+            <h3>${item.name}</h3>
+            <p>Price: NT$${item.price}</p>
+            <p>Size: ${item.size}</p>
+            <button onclick='addToCart("${cat}", ${index})'>Add to Cart</button>
+          </div>
+        `;
+      });
     }
 
-    let message = "購物內容：%0D%0A%0D%0A";
+    function addToCart(cat, index) {
+      cart.push(products[cat][index]);
+      renderCart();
+    }
 
-    cartList.forEach(item => {
-        message += `商品：${item.name}%0D%0A尺寸：${item.size}%0D%0A數量：${item.qty}%0D%0A小計：NT$${item.subtotal}%0D%0A%0D%0A`;
-    });
+    function renderCart() {
+      const c = document.getElementById("cart");
+      if (cart.length === 0) {
+        c.innerHTML = "(empty)";
+        return;
+      }
+      c.innerHTML = cart.map((item, i) => `${i+1}. ${item.name} - NT$${item.price}`).join("<br>");
+    }
 
-    message += `總計：NT$${total}%0D%0A`;
+    function clearCart() {
+      cart = [];
+      renderCart();
+    }
 
-    const mailto = `mailto:yourmail@example.com?subject=商城訂單&body=${message}`;
-    window.location.href = mailto;
-}
-</script>
+    function checkout() {
+      if (cart.length === 0) return alert("Cart is empty!");
 
+      const email = "mailto:shop@example.com?subject=Food%20Order&body=" +
+        encodeURIComponent(cart.map(i => `${i.name} - NT$${i.price} (${i.size})`).join("\n"));
+
+      window.location.href = email;
+    }
+  </script>
 </body>
 </html>
