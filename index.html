@@ -1,68 +1,101 @@
 <!DOCTYPE html>
-<html lang="zh-Hant">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>水果商店</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            background-color: #f9f9f9;
-        }
-
-        h1 {
-            text-align: center;
-        }
-
-        .product-container {
-            display: flex;
-            overflow-x: auto;
-            gap: 20px;
-            padding: 20px;
-        }
-
-        .product {
-            min-width: 200px;
-            background-color: #fff;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            padding: 15px;
-            text-align: center;
-            flex-shrink: 0;
-        }
-
-        .product img {
-            max-width: 100%;
-            border-radius: 8px;
-        }
-
-        .product-name {
-            font-size: 1.2em;
-            margin-top: 10px;
-        }
-
-        .product-unit {
-            color: #555;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Food Store</title>
+  <style>
+    body { font-family: Arial; padding: 20px; }
+    .section { margin-bottom: 30px; }
+    .item { border: 1px solid #ccc; padding: 10px; border-radius: 10px; margin: 10px 0; }
+    .item img { width: 120px; border-radius: 10px; }
+    button { padding: 6px 12px; margin-top: 5px; }
+    #cart { border: 2px solid #444; padding: 10px; border-radius: 10px; }
+  </style>
 </head>
 <body>
+  <h1>🍔 Food Shop</h1>
 
-    <h1>水果商店</h1>
+  <!-- Category Selection -->
+  <div class="section">
+    <label>Select Category:</label>
+    <select id="categorySelect" onchange="loadCategory()">
+      <option value="none">-- Select --</option>
+      <option value="snacks">Snacks</option>
+      <option value="meals">Meals</option>
+    </select>
+  </div>
 
-    <div class="product-container">
-        <div class="product">
-            <img src="images/banana.png" alt="香蕉">
-            <div class="product-name">香蕉</div>
-            <div class="product-unit">單位：根</div>
-        </div>
-        <div class="product">
-            <img src="images/orange.png" alt="橘子">
-            <div class="product-name">橘子</div>
-            <div class="product-unit">單位：個</div>
-        </div>
-    </div>
+  <!-- Product List -->
+  <div id="productList" class="section"></div>
 
+  <!-- Cart -->
+  <h2>My Cart</h2>
+  <div id="cart"></div>
+  <button onclick="clearCart()">Clear Cart</button>
+  <button onclick="checkout()">Checkout</button>
+
+  <script>
+    const products = {
+      snacks: [
+        { name: "Potato Chips", price: 35, size: "50g", img: "https://i.imgur.com/5ZQG9ZP.jpeg" },
+        { name: "Chocolate Bar", price: 45, size: "40g", img: "https://i.imgur.com/N8NTZcn.jpeg" }
+      ],
+      meals: [
+        { name: "Beef Bento", price: 120, size: "1 box", img: "https://i.imgur.com/eIl4jWQ.jpeg" },
+        { name: "Fried Chicken Set", price: 150, size: "1 set", img: "https://i.imgur.com/oXgKdpv.jpeg" }
+      ]
+    };
+
+    let cart = [];
+
+    function loadCategory() {
+      const cat = document.getElementById("categorySelect").value;
+      const list = document.getElementById("productList");
+      list.innerHTML = "";
+
+      if (cat === "none") return;
+
+      products[cat].forEach((item, index) => {
+        list.innerHTML += `
+          <div class='item'>
+            <img src="${item.img}" />
+            <h3>${item.name}</h3>
+            <p>Price: NT$${item.price}</p>
+            <p>Size: ${item.size}</p>
+            <button onclick='addToCart("${cat}", ${index})'>Add to Cart</button>
+          </div>
+        `;
+      });
+    }
+
+    function addToCart(cat, index) {
+      cart.push(products[cat][index]);
+      renderCart();
+    }
+
+    function renderCart() {
+      const c = document.getElementById("cart");
+      if (cart.length === 0) {
+        c.innerHTML = "(empty)";
+        return;
+      }
+      c.innerHTML = cart.map((item, i) => `${i+1}. ${item.name} - NT$${item.price}`).join("<br>");
+    }
+
+    function clearCart() {
+      cart = [];
+      renderCart();
+    }
+
+    function checkout() {
+      if (cart.length === 0) return alert("Cart is empty!");
+
+      const email = "mailto:shop@example.com?subject=Food%20Order&body=" +
+        encodeURIComponent(cart.map(i => `${i.name} - NT$${i.price} (${i.size})`).join("\n"));
+
+      window.location.href = email;
+    }
+  </script>
 </body>
 </html>
