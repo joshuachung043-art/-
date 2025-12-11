@@ -5,83 +5,75 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Food Store</title>
   <style>
-    body { font-family: Arial; padding: 20px; background: linear-gradient(135deg, #f9f9ff, #e2f3ff); }
+    body { font-family: Arial; padding: 20px; }
     .section { margin-bottom: 30px; }
-    .item { border: none; padding: 15px; border-radius: 15px; margin: 15px 0; background: white; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+    .item { 
+      border: 1px solid #ccc; 
+      padding: 10px; 
+      border-radius: 10px; 
+      margin: 10px 0; 
+    }
     .item img { width: 120px; border-radius: 10px; }
     button { padding: 6px 12px; margin-top: 5px; }
     #cart { border: 2px solid #444; padding: 10px; border-radius: 10px; }
   </style>
 </head>
 <body>
-  <h1>🍔 Food Shop</h1>
-  <img src="https://i.imgur.com/7FjvF4P.jpeg" alt="Food Banner" style="width:100%; border-radius:15px; margin:15px 0;" />
+  <h1>Food Shop</h1>
 
-  <!-- Category Selection -->
-  <div class="section"><h2>全部商品</h2><div id="allProducts" style="display:flex; overflow-x:auto; gap:15px; padding:10px;"></div></div>
-
-  <!-- Product List -->
-  
+  <!-- ALL PRODUCTS ON ONE PAGE -->
+  <div id="productList" class="section"></div>
 
   <!-- Cart -->
   <h2>My Cart</h2>
-  <div id="cart"></div>
+  <div id="cart">(empty)</div>
   <button onclick="clearCart()">Clear Cart</button>
   <button onclick="checkout()">Checkout</button>
 
   <script>
     const products = {
-     Snack: [
-  { name: "Potato Chips", price: 40, size: "一包", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-bQjalt2p-tncrYDq9gpoBIN3gNntLtwURg&s" },
-  { name: "Chocolate Bar", price: 45, size: "一條", img: "https://web.hocom.tw/Uploads/Product/186957_9w1smb9z.jpg" },
-  { name: "Haribo Goldbaren", price: 45, size: "一包", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQFfVLxzS642ZZrLQHqhtyi_l9eqFH1jvcUZQ&s" },
-  { name: "Pocky", price: 35, size: "一盒", img: "https://m.media-amazon.com/images/I/81lLJtVJfLL.jpg" },
-  { name: "Seaweed", price: 30, size: "一包", img: "https://m.media-amazon.com/images/I/81HkqJgpC6L.jpg" }
-],
-
-Fruit: [
-  { name: "Banana", price: 20, size: "一根", img: "https://www.millerchemical.com/wp-content/uploads/2021/03/iStock-1184345169.png" },
-  { name: "Orange", price: 20, size: "一顆", img: "https://tiimg.tistatic.com/fp/1/007/247/natural-fresh-orange-fruits-additional-benefit-to-health-pure-healthy-finest-quality-orange-color-891.jpg" },
-  { name: "Apple", price: 25, size: "一顆", img: "https://upload.wikimedia.org/wikipedia/commons/1/15/Red_Apple.jpg" },
-  { name: "Grapes", price: 60, size: "一串", img: "https://upload.wikimedia.org/wikipedia/commons/1/16/Table_grapes_on_white.jpg" }
-],
-
+      Snack: [
+        { name: "Potato Chips", price: 40, size: "一包", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-bQjalt2p-tncrYDq9gpoBIN3gNntLtwURg&s" },
+        { name: "Chocolate Bar", price: 45, size: "一條", img: "https://web.hocom.tw/Uploads/Product/186957_9w1smb9z.jpg" },
+        { name: "Haribo Goldbaren", price: 45, size: "一包", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQFfVLxzS642ZZrLQHqhtyi_l9eqFH1jvcUZQ&s" }
+        { name: "Pocky", price: 40, size: "一包", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTwnp66KXAAnmNHdFVgIe3km620-2vXBKypzA&s" }
+      ],
+      Fruit: [
+        { name: "Banana", price: 20, size: "一根", img: "https://www.millerchemical.com/wp-content/uploads/2021/03/iStock-1184345169.png" },
+        { name: "Orange", price: 20, size: "一顆", img: "https://tiimg.tistatic.com/fp/1/007/247/natural-fresh-orange-fruits-additional-benefit-to-health-pure-healthy-finest-quality-orange-color-891.jpg" }
+      ],
       Drink: [
-  { name: "Water", price: 49, size: "一瓶", img: "https://www.ihergo.com/photo/product/82/750_1435482_1695011081925.jpg" },
-  { name: "Orange Juice", price: 45, size: "一瓶", img: "https://image.10mart.com.tw/public/image/product/2024-08-29/283fa47c27cb85dd0f83c286ab1734e3/1000x1000.jpg" },
-  { name: "Apple Juice", price: 45, size: "一瓶", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5UQqh4z6yupgyqUA0T52L1kwAH8SoeELN1A&s" },
-  { name: "Milk", price: 35, size: "一杯", img: "https://image.10mart.com.tw/public/image/product/2024-09-02/00c9d93830bb06314973a2b3d1393397/1000x1000.jpg" }
-]
+        { name: "Water", price: 49, size: "一瓶", img: "https://www.ihergo.com/photo/product/82/750_1435482_1695011081925.jpg" },
+        { name: "Orange Juice", price: 45, size: "一瓶", img: "https://image.10mart.com.tw/public/image/product/2024-08-29/283fa47c27cb85dd0f83c286ab1734e3/1000x1000.jpg" },
+        { name: "Apple Juice", price: 45, size: "一瓶", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5UQqh4z6yupgyqUA0T52L1kwAH8SoeELN1A&s" }
+        { name: "Milk", price: 40, size: "一瓶", img: "https://image.10mart.com.tw/public/image/product/2024-09-02/00c9d93830bb06314973a2b3d1393397/1000x1000.jpg" }
+        { name: "Yogurt", price: 30, size: "一瓶", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ1oCGpjWYgKoTCcy6mEJNPm1Yord_MCI0l9A&s" }
+      ]
     };
 
     let cart = [];
 
-    function function loadAllProducts() {
-      const container = document.getElementById('allProducts');
-      container.innerHTML = '';
+    // Show ALL products directly
+    function loadAllProducts() {
+      const list = document.getElementById("productList");
+      list.innerHTML = "";
+
       Object.values(products).flat().forEach((item, index) => {
-        container.innerHTML += `
-          <div class='item' style='min-width:180px;'>
+        list.innerHTML += `
+          <div class='item'>
             <img src="${item.img}" />
             <h3>${item.name}</h3>
             <p>Price: NT$${item.price}</p>
             <p>Size: ${item.size}</p>
-            <button onclick='addToCartByItem(${index})'>Add to Cart</button>
-          </div>
-        `;
-      });
-    }" />
-            <h3>${item.name}</h3>
-            <p>Price: NT$${item.price}</p>
-            <p>Size: ${item.size}</p>
-            <button onclick='addToCart("${cat}", ${index})'>Add to Cart</button>
+            <button onclick='addToCart(${index})'>Add to Cart</button>
           </div>
         `;
       });
     }
 
-    function addToCart(cat, index) {
-      cart.push(products[cat][index]);
+    function addToCart(index) {
+      const allItems = Object.values(products).flat();
+      cart.push(allItems[index]);
       renderCart();
     }
 
@@ -99,18 +91,17 @@ Fruit: [
       renderCart();
     }
 
-    function addToCartByItem(i){ cart.push(Object.values(products).flat()[i]); renderCart(); }
-
-    loadAllProducts();
-
     function checkout() {
       if (cart.length === 0) return alert("Cart is empty!");
 
-      const email = "mailto:shop@example.com?subject=Food%20Order&body=" +
+      const email = "mailto:joshuachung043@gmail.com?subject=Food%20Order&body=" +
         encodeURIComponent(cart.map(i => `${i.name} - NT$${i.price} (${i.size})`).join("\n"));
 
       window.location.href = email;
     }
+
+    // Load products on page load
+    loadAllProducts();
   </script>
 </body>
 </html>
