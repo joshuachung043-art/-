@@ -38,12 +38,18 @@
   <script>
     const products = {
       snacks: [
-        { name: "Potato Chips", price: 35, size: "50g", img: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/Potato-Chips.jpg/1200px-Potato-Chips.jpg" },
-        { name: "Chocolate Bar", price: 45, size: "40g", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQZqzHUGSB3TssVFLmvVcl-suzxgjjZNgWRw&s" }
+        { name: "Potato Chips", price: 40, size: "一包", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-bQjalt2p-tncrYDq9gpoBIN3gNntLtwURg&s" },
+        { name: "Chocolate Bar", price: 45, size: "一條", img: "https://web.hocom.tw/Uploads/Product/186957_9w1smb9z.jpg" }
+        { name: "Haribo Goldbaren", price: 45, size: "一條", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQFfVLxzS642ZZrLQHqhtyi_l9eqFH1jvcUZQ&s" }
       ],
-      fruite: [
-        { name: "Banana", price: 15, size: "一根", img: "https://www.millerchemical.com/wp-content/uploads/2021/03/iStock-1184345169.png" },
-        { name: "Orange", price: 10, size: "一顆", img: "https://tiimg.tistatic.com/fp/1/007/247/natural-fresh-orange-fruits-additional-benefit-to-health-pure-healthy-finest-quality-orange-color-891.jpg" }
+      fruites: [
+        { name: "Banana", price: 20, size: "一根", img: "https://www.millerchemical.com/wp-content/uploads/2021/03/iStock-1184345169.png" },
+        { name: "Orange", price: 20, size: "一顆", img: "https://tiimg.tistatic.com/fp/1/007/247/natural-fresh-orange-fruits-additional-benefit-to-health-pure-healthy-finest-quality-orange-color-891.jpg" }
+      ]
+      Drink: [
+        { name: "Water", price: 49, size: "一瓶", img: "https://www.ihergo.com/photo/product/82/750_1435482_1695011081925.jpg"}
+        { name: "Orange juice", price: 45, size: "一瓶", img: "https://image.10mart.com.tw/public/image/product/2024-08-29/283fa47c27cb85dd0f83c286ab1734e3/1000x1000.jpg"}
+        { name: "Apple juice", price: 45, size: "一瓶", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5UQqh4z6yupgyqUA0T52L1kwAH8SoeELN1A&s"}
       ]
     };
 
@@ -91,7 +97,7 @@
     function checkout() {
       if (cart.length === 0) return alert("Cart is empty!");
 
-      const email = "mailto:shop@example.com?subject=Food%20Order&body=" +
+      const email = "mailto:joshuachung043@gmail.com?subject=Food%20Order&body=" +
         encodeURIComponent(cart.map(i => `${i.name} - NT$${i.price} (${i.size})`).join("\n"));
 
       window.location.href = email;
