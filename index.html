@@ -5,30 +5,80 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Food Store</title>
   <style>
-    body { font-family: Arial; padding: 20px; }
-    .section { margin-bottom: 30px; }
-    .item { 
-      border: 1px solid #ccc; 
-      padding: 10px; 
-      border-radius: 10px; 
-      margin: 10px 0; 
+    body {
+      font-family: Arial;
+      padding: 20px;
+      background: linear-gradient(135deg, #fdfbfb, #ebedee);
     }
-    .item img { width: 120px; border-radius: 10px; }
-    button { padding: 6px 12px; margin-top: 5px; }
-    #cart { border: 2px solid #444; padding: 10px; border-radius: 10px; }
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    #productList {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 20px;
+    }
+    .item {
+      background: white;
+      border-radius: 12px;
+      padding: 15px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      text-align: center;
+      transition: 0.2s;
+    }
+    .item:hover {
+      transform: scale(1.03);
+      box-shadow: 0 6px 14px rgba(0,0,0,0.15);
+    }
+    .item img {
+      width: 100%;
+      border-radius: 10px;
+    }
+    button {
+      padding: 8px 15px;
+      margin-top: 8px;
+      border: none;
+      background: #4a90e2;
+      color: white;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #357ac9;
+    }
+    #cartBox {
+      margin-top: 40px;
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    #cart {
+      margin-top: 10px;
+      line-height: 1.7em;
+    }
+    #total {
+      font-weight: bold;
+      margin-top: 10px;
+      font-size: 18px;
+    }
   </style>
 </head>
 <body>
   <h1>Food Shop</h1>
 
   <!-- ALL PRODUCTS ON ONE PAGE -->
-  <div id="productList" class="section"></div>
+  <div id="productList"></div>
 
   <!-- Cart -->
-  <h2>My Cart</h2>
-  <div id="cart">(empty)</div>
-  <button onclick="clearCart()">Clear Cart</button>
-  <button onclick="checkout()">Checkout</button>
+  <div id="cartBox">
+    <h2>My Cart</h2>
+    <div id="cart">(empty)</div>
+    <div id="total">Total: NT$0</div>
+    <button onclick="clearCart()">Clear Cart</button>
+    <button onclick="checkout()">Checkout</button>
+  </div>
 
   <script>
   const products = {
@@ -38,12 +88,10 @@
       { name: "Haribo Goldbaren", price: 45, size: "一包", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQFfVLxzS642ZZrLQHqhtyi_l9eqFH1jvcUZQ&s" },
       { name: "Pocky", price: 40, size: "一包", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTwnp66KXAAnmNHdFVgIe3km620-2vXBKypzA&s" }
     ],
-
     Fruit: [
       { name: "Banana", price: 20, size: "一根", img: "https://www.millerchemical.com/wp-content/uploads/2021/03/iStock-1184345169.png" },
       { name: "Orange", price: 20, size: "一顆", img: "https://tiimg.tistatic.com/fp/1/007/247/natural-fresh-orange-fruits-additional-benefit-to-health-pure-healthy-finest-quality-orange-color-891.jpg" }
     ],
-
     Drink: [
       { name: "Water", price: 49, size: "一瓶", img: "https://www.ihergo.com/photo/product/82/750_1435482_1695011081925.jpg" },
       { name: "Orange Juice", price: 45, size: "一瓶", img: "https://image.10mart.com.tw/public/image/product/2024-08-29/283fa47c27cb85dd0f83c286ab1734e3/1000x1000.jpg" },
@@ -55,7 +103,6 @@
 
   let cart = [];
 
-  // Show ALL products directly
   function loadAllProducts() {
     const list = document.getElementById("productList");
     list.innerHTML = "";
@@ -81,11 +128,18 @@
 
   function renderCart() {
     const c = document.getElementById("cart");
+    const total = document.getElementById("total");
+
     if (cart.length === 0) {
       c.innerHTML = "(empty)";
+      total.innerHTML = "Total: NT$0";
       return;
     }
+
     c.innerHTML = cart.map((item, i) => `${i+1}. ${item.name} - NT$${item.price}`).join("<br>");
+
+    const sum = cart.reduce((a,b) => a + b.price, 0);
+    total.innerHTML = `Total: NT$${sum}`;
   }
 
   function clearCart() {
