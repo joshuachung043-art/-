@@ -52,60 +52,57 @@
       { name: "Yogurt", price: 30, size: "一瓶", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ1oCGpjWYgKoTCcy6mEJNPm1Yord_MCI0l9A&s" }
     ]
   };
-</script>
 
-    let cart = [];
+  let cart = [];
 
-    // Show ALL products directly
-    function loadAllProducts() {
-      const list = document.getElementById("productList");
-      list.innerHTML = "";
+  // Show ALL products directly
+  function loadAllProducts() {
+    const list = document.getElementById("productList");
+    list.innerHTML = "";
 
-      Object.values(products).flat().forEach((item, index) => {
-        list.innerHTML += `
-          <div class='item'>
-            <img src="${item.img}" />
-            <h3>${item.name}</h3>
-            <p>Price: NT$${item.price}</p>
-            <p>Size: ${item.size}</p>
-            <button onclick='addToCart(${index})'>Add to Cart</button>
-          </div>
-        `;
-      });
+    Object.values(products).flat().forEach((item, index) => {
+      list.innerHTML += `
+        <div class='item'>
+          <img src="${item.img}" />
+          <h3>${item.name}</h3>
+          <p>Price: NT$${item.price}</p>
+          <p>Size: ${item.size}</p>
+          <button onclick='addToCart(${index})'>Add to Cart</button>
+        </div>
+      `;
+    });
+  }
+
+  function addToCart(index) {
+    const allItems = Object.values(products).flat();
+    cart.push(allItems[index]);
+    renderCart();
+  }
+
+  function renderCart() {
+    const c = document.getElementById("cart");
+    if (cart.length === 0) {
+      c.innerHTML = "(empty)";
+      return;
     }
+    c.innerHTML = cart.map((item, i) => `${i+1}. ${item.name} - NT$${item.price}`).join("<br>");
+  }
 
-    function addToCart(index) {
-      const allItems = Object.values(products).flat();
-      cart.push(allItems[index]);
-      renderCart();
-    }
+  function clearCart() {
+    cart = [];
+    renderCart();
+  }
 
-    function renderCart() {
-      const c = document.getElementById("cart");
-      if (cart.length === 0) {
-        c.innerHTML = "(empty)";
-        return;
-      }
-      c.innerHTML = cart.map((item, i) => `${i+1}. ${item.name} - NT$${item.price}`).join("<br>");
-    }
+  function checkout() {
+    if (cart.length === 0) return alert("Cart is empty!");
 
-    function clearCart() {
-      cart = [];
-      renderCart();
-    }
+    const email = "mailto:joshuachung043@gmail.com?subject=Food%20Order&body=" +
+      encodeURIComponent(cart.map(i => `${i.name} - NT$${i.price} (${i.size})`).join("\n"));
 
-    function checkout() {
-      if (cart.length === 0) return alert("Cart is empty!");
+    window.location.href = email;
+  }
 
-      const email = "mailto:joshuachung043@gmail.com?subject=Food%20Order&body=" +
-        encodeURIComponent(cart.map(i => `${i.name} - NT$${i.price} (${i.size})`).join("\n"));
-
-      window.location.href = email;
-    }
-
-    // Load products on page load
-    loadAllProducts();
+  loadAllProducts();
   </script>
 </body>
 </html>
-
