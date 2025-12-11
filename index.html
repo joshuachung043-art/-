@@ -7,32 +7,26 @@
   <style>
     body { font-family: Arial; padding: 20px; }
     .section { margin-bottom: 30px; }
-    .item { border: 1px solid #ccc; padding: 10px; border-radius: 10px; margin: 10px 0; }
+    .item { 
+      border: 1px solid #ccc; 
+      padding: 10px; 
+      border-radius: 10px; 
+      margin: 10px 0; 
+    }
     .item img { width: 120px; border-radius: 10px; }
     button { padding: 6px 12px; margin-top: 5px; }
     #cart { border: 2px solid #444; padding: 10px; border-radius: 10px; }
   </style>
 </head>
 <body>
-  <h1> Food Shop</h1>
+  <h1>Food Shop</h1>
 
-  <!-- Category Selection -->
-  <div class="section">
-    <label>Select Category:</label>
-    <select id="categorySelect" onchange="loadCategory()">
-      <option value="none">-- Select --</option>
-      <option value="Snack">Snack</option>
-      <option value="Fruite">Fruite</option>
-      <option value="Drink">Drink</option>
-    </select>
-  </div>
-
-  <!-- Product List -->
+  <!-- ALL PRODUCTS ON ONE PAGE -->
   <div id="productList" class="section"></div>
 
   <!-- Cart -->
   <h2>My Cart</h2>
-  <div id="cart"></div>
+  <div id="cart">(empty)</div>
   <button onclick="clearCart()">Clear Cart</button>
   <button onclick="checkout()">Checkout</button>
 
@@ -40,44 +34,43 @@
     const products = {
       Snack: [
         { name: "Potato Chips", price: 40, size: "一包", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-bQjalt2p-tncrYDq9gpoBIN3gNntLtwURg&s" },
-        { name: "Chocolate Bar", price: 45, size: "一條", img: "https://web.hocom.tw/Uploads/Product/186957_9w1smb9z.jpg" }
-        { name: "Haribo Goldbaren", price: 45, size: "一條", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQFfVLxzS642ZZrLQHqhtyi_l9eqFH1jvcUZQ&s" }
+        { name: "Chocolate Bar", price: 45, size: "一條", img: "https://web.hocom.tw/Uploads/Product/186957_9w1smb9z.jpg" },
+        { name: "Haribo Goldbaren", price: 45, size: "一包", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQFfVLxzS642ZZrLQHqhtyi_l9eqFH1jvcUZQ&s" }
       ],
-      Fruite: [
+      Fruit: [
         { name: "Banana", price: 20, size: "一根", img: "https://www.millerchemical.com/wp-content/uploads/2021/03/iStock-1184345169.png" },
         { name: "Orange", price: 20, size: "一顆", img: "https://tiimg.tistatic.com/fp/1/007/247/natural-fresh-orange-fruits-additional-benefit-to-health-pure-healthy-finest-quality-orange-color-891.jpg" }
-      ]
+      ],
       Drink: [
-        { name: "Water", price: 49, size: "一瓶", img: "https://www.ihergo.com/photo/product/82/750_1435482_1695011081925.jpg"}
-        { name: "Orange juice", price: 45, size: "一瓶", img: "https://image.10mart.com.tw/public/image/product/2024-08-29/283fa47c27cb85dd0f83c286ab1734e3/1000x1000.jpg"}
-        { name: "Apple juice", price: 45, size: "一瓶", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5UQqh4z6yupgyqUA0T52L1kwAH8SoeELN1A&s"}
+        { name: "Water", price: 49, size: "一瓶", img: "https://www.ihergo.com/photo/product/82/750_1435482_1695011081925.jpg" },
+        { name: "Orange Juice", price: 45, size: "一瓶", img: "https://image.10mart.com.tw/public/image/product/2024-08-29/283fa47c27cb85dd0f83c286ab1734e3/1000x1000.jpg" },
+        { name: "Apple Juice", price: 45, size: "一瓶", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5UQqh4z6yupgyqUA0T52L1kwAH8SoeELN1A&s" }
       ]
     };
 
     let cart = [];
 
-    function loadCategory() {
-      const cat = document.getElementById("categorySelect").value;
+    // Show ALL products directly
+    function loadAllProducts() {
       const list = document.getElementById("productList");
       list.innerHTML = "";
 
-      if (cat === "none") return;
-
-      products[cat].forEach((item, index) => {
+      Object.values(products).flat().forEach((item, index) => {
         list.innerHTML += `
           <div class='item'>
             <img src="${item.img}" />
             <h3>${item.name}</h3>
             <p>Price: NT$${item.price}</p>
             <p>Size: ${item.size}</p>
-            <button onclick='addToCart("${cat}", ${index})'>Add to Cart</button>
+            <button onclick='addToCart(${index})'>Add to Cart</button>
           </div>
         `;
       });
     }
 
-    function addToCart(cat, index) {
-      cart.push(products[cat][index]);
+    function addToCart(index) {
+      const allItems = Object.values(products).flat();
+      cart.push(allItems[index]);
       renderCart();
     }
 
@@ -103,6 +96,9 @@
 
       window.location.href = email;
     }
+
+    // Load products on page load
+    loadAllProducts();
   </script>
 </body>
 </html>
