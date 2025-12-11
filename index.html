@@ -21,8 +21,9 @@
     <label>Select Category:</label>
     <select id="categorySelect" onchange="loadCategory()">
       <option value="none">-- Select --</option>
-      <option value="snacks">Snacks</option>
-      <option value="fruite">Fruite</option>
+      <option value="Snack">Snack</option>
+      <option value="Fruite">Fruite</option>
+      <option value="Drink">Fruite</option>
     </select>
   </div>
 
@@ -37,12 +38,12 @@
 
   <script>
     const products = {
-      snacks: [
+      Snack: [
         { name: "Potato Chips", price: 40, size: "一包", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-bQjalt2p-tncrYDq9gpoBIN3gNntLtwURg&s" },
         { name: "Chocolate Bar", price: 45, size: "一條", img: "https://web.hocom.tw/Uploads/Product/186957_9w1smb9z.jpg" }
         { name: "Haribo Goldbaren", price: 45, size: "一條", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQFfVLxzS642ZZrLQHqhtyi_l9eqFH1jvcUZQ&s" }
       ],
-      fruites: [
+      Fruite: [
         { name: "Banana", price: 20, size: "一根", img: "https://www.millerchemical.com/wp-content/uploads/2021/03/iStock-1184345169.png" },
         { name: "Orange", price: 20, size: "一顆", img: "https://tiimg.tistatic.com/fp/1/007/247/natural-fresh-orange-fruits-additional-benefit-to-health-pure-healthy-finest-quality-orange-color-891.jpg" }
       ]
