@@ -150,10 +150,12 @@
   function checkout() {
     if (cart.length === 0) return alert("Cart is empty!");
 
-    const email = "mailto:joshuachung043@gmail.com?subject=Food%20Order&body=" +
-      encodeURIComponent(cart.map(i => `${i.name} - NT$${i.price} (${i.size})`).join("\n"));
+    const total = cart.reduce((sum, i) => sum + i.price, 0);
+      const bodyText = cart.map(i => `${i.name} - NT$${i.price} (${i.size})`).join("\n") +
+        `\n\nTotal: NT$${total}\nPlease pay first.`;
+      const email = "mailto:joshuachung043@gmail.com?subject=Food%20Order&body=" + encodeURIComponent(bodyText);
 
-    window.location.href = email;
+      window.location.href = email;
   }
 
   loadAllProducts();
