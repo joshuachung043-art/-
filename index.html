@@ -82,24 +82,82 @@
 
   <script>
   const products = {
-    Snack: [
-      { name: "Potato Chips", price: 40, size: "一包", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-bQjalt2p-tncrYDq9gpoBIN3gNntLtwURg&s" },
-      { name: "Chocolate Bar", price: 45, size: "一條", img: "https://web.hocom.tw/Uploads/Product/186957_9w1smb9z.jpg" },
-      { name: "Haribo Goldbaren", price: 45, size: "一包", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQFfVLxzS642ZZrLQHqhtyi_l9eqFH1jvcUZQ&s" },
-      { name: "Pocky", price: 40, size: "一包", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTwnp66KXAAnmNHdFVgIe3km620-2vXBKypzA&s" }
-    ],
-    Fruit: [
-      { name: "Banana", price: 20, size: "一根", img: "https://www.millerchemical.com/wp-content/uploads/2021/03/iStock-1184345169.png" },
-      { name: "Orange", price: 20, size: "一顆", img: "https://tiimg.tistatic.com/fp/1/007/247/natural-fresh-orange-fruits-additional-benefit-to-health-pure-healthy-finest-quality-orange-color-891.jpg" }
-    ],
-    Drink: [
-      { name: "Water", price: 49, size: "一瓶", img: "https://www.ihergo.com/photo/product/82/750_1435482_1695011081925.jpg" },
-      { name: "Orange Juice", price: 45, size: "一瓶", img: "https://image.10mart.com.tw/public/image/product/2024-08-29/283fa47c27cb85dd0f83c286ab1734e3/1000x1000.jpg" },
-      { name: "Apple Juice", price: 45, size: "一瓶", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5UQqh4z6yupgyqUA0T52L1kwAH8SoeELN1A&s" },
-      { name: "Milk", price: 40, size: "一瓶", img: "https://image.10mart.com.tw/public/image/product/2024-09-02/00c9d93830bb06314973a2b3d1393397/1000x1000.jpg" },
-      { name: "Yogurt", price: 30, size: "一瓶", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ1oCGpjWYgKoTCcy6mEJNPm1Yord_MCI0l9A&s" }
-    ]
-  };
+  Snack: [
+    { 
+      name: "Potato Chips", 
+      price: 40, 
+      size: "60g", 
+      img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-bQjalt2p-tncrYDq9gpoBIN3gNntLtwURg&s" 
+    },
+    { 
+      name: "Chocolate Bar", 
+      price: 45, 
+      size: "50g", 
+      img: "https://web.hocom.tw/Uploads/Product/186957_9w1smb9z.jpg" 
+    },
+    { 
+      name: "Haribo Goldbaren", 
+      price: 45, 
+      size: "80g", 
+      img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQFfVLxzS642ZZrLQHqhtyi_l9eqFH1jvcUZQ&s" 
+    },
+    { 
+      name: "Pocky", 
+      price: 40, 
+      size: "45g", 
+      img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTwnp66KXAAnmNHdFVgIe3km620-2vXBKypzA&s" 
+    }
+  ],
+
+  Fruit: [
+    { 
+      name: "Banana", 
+      price: 20, 
+      size: "一根", 
+      img: "https://www.millerchemical.com/wp-content/uploads/2021/03/iStock-1184345169.png" 
+    },
+    { 
+      name: "Orange", 
+      price: 20, 
+      size: "一顆", 
+      img: "https://tiimg.tistatic.com/fp/1/007/247/natural-fresh-orange-fruits-additional-benefit-to-health-pure-healthy-finest-quality-orange-color-891.jpg" 
+    }
+  ],
+
+  Drink: [
+    { 
+      name: "Water", 
+      price: 49, 
+      size: "600mL", 
+      img: "https://www.ihergo.com/photo/product/82/750_1435482_1695011081925.jpg" 
+    },
+    { 
+      name: "Orange Juice", 
+      price: 45, 
+      size: "350mL", 
+      img: "https://image.10mart.com.tw/public/image/product/2024-08-29/283fa47c27cb85dd0f83c286ab1734e3/1000x1000.jpg" 
+    },
+    { 
+      name: "Apple Juice", 
+      price: 45, 
+      size: "350mL", 
+      img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5UQqh4z6yupgyqUA0T52L1kwAH8SoeELN1A&s" 
+    },
+    { 
+      name: "Milk", 
+      price: 40, 
+      size: "450mL", 
+      img: "https://image.10mart.com.tw/public/image/product/2024-09-02/00c9d93830bb06314973a2b3d1393397/1000x1000.jpg" 
+    },
+    { 
+      name: "Yogurt", 
+      price: 30, 
+      size: "300mL", 
+      img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ1oCGpjWYgKoTCcy6mEJNPm1Yord_MCI0l9A&s" 
+    }
+  ]
+};
+
 
   let cart = [];
 
