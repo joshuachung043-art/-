@@ -34,7 +34,7 @@
   .item img {
     width: 120px;
     height: 120px;
-    object-fit: cover;
+    object-fit: contain;
     border-radius: 10px;
   }
 
@@ -97,7 +97,7 @@ const products = {
   Drink: [
     { name: "Water", price: 49, size: "600mL", img: "https://www.ihergo.com/photo/product/82/750_1435482_1695011081925.jpg" },
     { name: "Orange Juice", price: 45, size: "350mL", img: "https://image.10mart.com.tw/public/image/product/2024-08-29/283fa47c27cb85dd0f83c286ab1734e3/1000x1000.jpg" },
-    { name: "Apple Juice", price: 45, width: "10px", size: "350mL", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5UQqh4z6yupgyqUA0T52L1kwAH8SoeELN1A&s" },
+    { name: "Apple Juice", price: 45, size: "350mL", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5UQqh4z6yupgyqUA0T52L1kwAH8SoeELN1A&s" },
     { name: "Milk", price: 40, size: "450mL", img: "https://image.10mart.com.tw/public/image/product/2024-09-02/00c9d93830bb06314973a2b3d1393397/1000x1000.jpg" },
     { name: "Yogurt", price: 30, size: "300mL", img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ1oCGpjWYgKoTCcy6mEJNPm1Yord_MCI0l9A&s" }
   ]
@@ -111,7 +111,7 @@ function loadAllProducts() {
 
   list.innerHTML = allItems.map((item, index) => `
     <div class="item">
-      <img width="${item.width}" src="${item.img}">
+      <img src="${item.img}">
       <h3>${item.name}</h3>
       <p>${item.size}</p>
       <p>NT$${item.price}</p>
